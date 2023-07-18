@@ -123,7 +123,7 @@ function ComponentJava() {
 
   return (
     <div>
-      {/* Contenido JSX del componente ComponentJava */}
+    
     </div>
   );
 }
