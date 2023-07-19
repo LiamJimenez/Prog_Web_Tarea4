@@ -8,10 +8,13 @@ body {
   text-align: center;
   margin-top: 50px;
   font-family: Arial, sans-serif;
+  background-image: url('./img/Fondo Azul.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 h2 {
-  color: #333;
+  color: black;
 }
 
 form {
@@ -40,7 +43,7 @@ button {
 .buttons-container button {
   padding: 7px 12px;
   margin-right: 10px;
-  background-color: #333;
+  background-color: rgb(0, 0, 0); 
 }
 
 .buttons-container button:last-child {
@@ -54,6 +57,7 @@ table {
   width: 80%;
   border: 1px solid #333;
   table-layout: fixed;
+  background-color: rgba(0, 0, 0, 0); 
 }
 
 th,
@@ -64,11 +68,12 @@ td {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  color: #fff; 
 }
 
 thead {
-  background-color: #333;
-  color: #fff;
+  background-color: black; 
+  color: #fff; 
 }
 
 td {
@@ -76,7 +81,8 @@ td {
 }
 
 tr.selected {
-  background-color: rgb(5, 232, 248);
+  background-color: rgba(70, 5, 248, 0.452);
   color: white;
 }
+
 

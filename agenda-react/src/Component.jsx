@@ -5,7 +5,18 @@ const Component = memo(() => {
   useEffect(() => {
     // Obtener referencia al botón "Agregar"
     var agregarUsuarioBtn = document.getElementById("agregarContacto");
-    agregarUsuarioBtn.addEventListener("click", function() {
+    agregarUsuarioBtn.addEventListener("click", agregarContacto);
+
+    // Obtener referencia al botón "Obtener"
+    var obtenerContactosBtn = document.getElementById("obtenerContactos");
+    obtenerContactosBtn.addEventListener("click", obtenerContactos);
+
+    // Obtener referencia al botón "Eliminar"
+    var eliminarContactosBtn = document.getElementById("eliminarContactos");
+    eliminarContactosBtn.addEventListener("click", eliminarContactos);
+
+    // Función para agregar un usuario a la tabla
+    function agregarContacto() {
       var nombre = document.getElementById("nombre").value;
       var apellido = document.getElementById("apellido").value;
       var telefono = document.getElementById("telefono").value;
@@ -15,49 +26,6 @@ const Component = memo(() => {
       document.getElementById("nombre").value = "";
       document.getElementById("apellido").value = "";
       document.getElementById("telefono").value = "";
-    });
-
-    // Obtener referencia al botón "Obtener"
-    var obtenerContactosBtn = document.getElementById("obtenerContactos");
-    obtenerContactosBtn.addEventListener("click", function() {
-      obtenerContactos();
-    });
-
-    // Obtener referencia al botón "Eliminar"
-    var eliminarContactosBtn = document.getElementById("eliminarContactos");
-    eliminarContactosBtn.addEventListener("click", function() {
-      var filasSeleccionadas = document.querySelectorAll("tr.selected");
-
-      if (filasSeleccionadas.length > 0) {
-        filasSeleccionadas.forEach(function(fila) {
-          eliminarFilaTabla(fila);
-        });
-      } else {
-        alert("Selecciona una o más filas para eliminar.");
-      }
-    });
-
-    // Función para agregar un usuario a la tabla
-    function agregarUsuarioTabla(nombre, apellido, telefono) {
-      var tabla = document.getElementById("usersTableBody");
-      var primeraFila = tabla.rows[0];
-
-      var nuevaFila = tabla.insertRow(0);
-
-      var celdaNombre = nuevaFila.insertCell(0);
-      celdaNombre.innerHTML = nombre;
-
-      var celdaApellido = nuevaFila.insertCell(1);
-      celdaApellido.innerHTML = apellido;
-
-      var celdaTelefono = nuevaFila.insertCell(2);
-      celdaTelefono.innerHTML = telefono;
-
-      nuevaFila.addEventListener("click", function() {
-        marcarFilaSeleccionada(this);
-      });
-
-      tabla.insertBefore(nuevaFila, primeraFila);
     }
 
     // Función para obtener los contactos
@@ -93,6 +61,39 @@ const Component = memo(() => {
       tabla.removeChild(fila);
     }
 
+    // Función para agregar un usuario a la tabla
+    function agregarUsuarioTabla(nombre, apellido, telefono) {
+      var tabla = document.getElementById("usersTableBody");
+
+      var nuevaFila = tabla.insertRow(0);
+
+      var celdaNombre = nuevaFila.insertCell(0);
+      celdaNombre.innerHTML = nombre;
+
+      var celdaApellido = nuevaFila.insertCell(1);
+      celdaApellido.innerHTML = apellido;
+
+      var celdaTelefono = nuevaFila.insertCell(2);
+      celdaTelefono.innerHTML = telefono;
+
+      nuevaFila.addEventListener("click", function() {
+        marcarFilaSeleccionada(this);
+      });
+    }
+
+    // Función para eliminar los contactos seleccionados
+    function eliminarContactos() {
+      var filasSeleccionadas = document.querySelectorAll("tr.selected");
+
+      if (filasSeleccionadas.length > 0) {
+        filasSeleccionadas.forEach(function(fila) {
+          eliminarFilaTabla(fila);
+        });
+      } else {
+        alert("Selecciona una o más filas para eliminar.");
+      }
+    }
+
     // Establecer estilos de cursor para los botones al pasar el mouse sobre ellos
     agregarUsuarioBtn.addEventListener("mouseover", function() {
       this.style.cursor = "pointer";
@@ -105,6 +106,13 @@ const Component = memo(() => {
     eliminarContactosBtn.addEventListener("mouseover", function() {
       this.style.cursor = "pointer";
     });
+
+    // Limpiar los eventos antes de desmontar el componente
+    return () => {
+      agregarUsuarioBtn.removeEventListener("click", agregarContacto);
+      obtenerContactosBtn.removeEventListener("click", obtenerContactos);
+      eliminarContactosBtn.removeEventListener("click", eliminarContactos);
+    };
   }, []);
 
   return (
@@ -139,5 +147,3 @@ const Component = memo(() => {
 });
 
 export default Component;
-
-
